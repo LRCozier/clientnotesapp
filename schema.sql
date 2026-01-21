@@ -1,7 +1,16 @@
+--CLIENT NOTES APP - DATABASE SCHEME
+--AUTHOUR: LUKE RUDDERHAM-COZIER
+--PORTFOLIO PROJECT
+
+--RUN: mysql -u root -p < schema.sql
+
+--Create database if it does not exist
 CREATE DATABASE IF NOT EXISTS
 client_notes_app;
 USE client_notes_app;
 
+--Users Table
+-- Stoes user accounts with security features
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) UNIQUE NOT NULL,
@@ -14,6 +23,8 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+--Notes Table
+-- User's notes with user assignment
 CREATE TABLE notes (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
@@ -24,6 +35,8 @@ CREATE TABLE notes (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+--Password Resets Table
+-- Secure password reset tokens
 CREATE TABLE password_resets (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
@@ -33,6 +46,7 @@ CREATE TABLE password_resets (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Login Attempts Table
 CREATE TABLE login_attempts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ip_address VARCHAR(45) NOT NULL,
